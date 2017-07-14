@@ -49,8 +49,6 @@ class DomesticMelonOrder(AbstractMelonOrder):
 class InternationalMelonOrder(AbstractMelonOrder):
     """An international (non-US) melon order."""
 
-
-
     def __init__(self, species, qty, country_code):
         """Initialize melon order attributes."""
 
