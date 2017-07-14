@@ -15,8 +15,7 @@ class AbstractMelonOrder(object):
         self.tax = tax
 
     def get_base_price(self):
-        base_price = random.randint(5, 9)
-        return base_price
+        return random.randint(5, 9)
 
     def get_total(self):
         """Calculate price, including tax."""
@@ -41,7 +40,7 @@ class DomesticMelonOrder(AbstractMelonOrder):
 
     def __init__(self, species, qty):
         """Initialize melon order attributes."""
-        
+
         super(DomesticMelonOrder, self).__init__(species, qty, "Domestic", 0.08)
 
 
@@ -77,11 +76,12 @@ class GovernmentMelonOrder(AbstractMelonOrder):
 
     def __init__(self, species, qty):
         """Initialize melon order attributes."""
-
-        super(GovernmentMelonOrder, self).__init__(species, qty, "Domestic", 0.0)
+        tax = 0.0
+        super(GovernmentMelonOrder, self).__init__(species, qty, "Domestic", tax)
         self.passed_inspection = False
 
     def mark_inspection(self, passed):
         """Updates whether or not melon has passed inspection."""
-
-        self.passed_inspection = bool(passed)
+        if type(passed) != type(True):
+            raise ValueError("passed should be boolean type.")
+        self.passed_inspection = passed
