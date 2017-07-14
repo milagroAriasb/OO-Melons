@@ -2,6 +2,8 @@
 
 import random
 
+from datetime import datetime
+
 class AbstractMelonOrder(object):
     """An abstract base class that other Melon Orders inherit from."""
 
@@ -9,7 +11,10 @@ class AbstractMelonOrder(object):
         """Initialize melon order attributes."""
 
         self.species = species
-        self.qty = qty
+        if qty <= 100:
+            self.qty = qty
+        else:
+            raise TooManyMelonsError("No more than 100 melons!")
         self.shipped = False
         self.order_type = order_type
         self.tax = tax
@@ -17,7 +22,17 @@ class AbstractMelonOrder(object):
     def get_base_price(self):
         """Returns a random number between 5 and 9."""
 
-        return random.randint(5, 9)
+        total = random.randint(5, 9)
+
+        today = datetime.now()
+
+        # if time is 8-10:59am and weekday is Monday-Friday, $4 will be added
+        # to the total
+        if today.hour in range(8, 11) and today.weekday() in range(0, 5):
+
+            total = total + 4
+
+        return total
 
     def get_total(self):
         """Calculate price, including tax."""
@@ -86,3 +101,9 @@ class GovernmentMelonOrder(AbstractMelonOrder):
         if type(passed) != type(True):
             raise ValueError("Need to pass a boolean type.")
         self.passed_inspection = passed
+
+
+class TooManyMelonsError(ValueError):
+    """Too many melons error."""
+    pass
+    
