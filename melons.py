@@ -15,6 +15,8 @@ class AbstractMelonOrder(object):
         self.tax = tax
 
     def get_base_price(self):
+        """Returns a random number between 5 and 9."""
+
         return random.randint(5, 9)
 
     def get_total(self):
@@ -82,6 +84,7 @@ class GovernmentMelonOrder(AbstractMelonOrder):
 
     def mark_inspection(self, passed):
         """Updates whether or not melon has passed inspection."""
+
         if type(passed) != type(True):
-            raise ValueError("passed should be boolean type.")
+            raise ValueError("Need to pass a boolean type.")
         self.passed_inspection = passed
